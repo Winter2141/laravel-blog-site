@@ -12,7 +12,7 @@
 @section('isadmin')
     @if ($user_type == 'admin')
         <a class="dropdown-item" href=" {{ route('admin') }}">
-        Admin Panle
+        Admin Panel
         </a>
     @endif
 @endsection
@@ -41,16 +41,16 @@
                 </div>
             </div>
             <div class="card-body d-block overflow-hidden" style="height:60px;">
-                <h6>{{$blog->body}}</h6>
+                <h6><?php echo nl2br($blog->body, false)?></h6>
 
                
             </div>
-            <a class="ml-4" href="{{ route('show-blog', ['blog'=>$blog->id]) }}">Show Detail</a>
+            <a class="ml-4" href="{{ route('user.blog.show', ['blog'=>$blog->id]) }}">Show Detail</a>
         </div>
         @endforeach
 
         @if ($user_type != 'comment')
-            <a class="mt-3 mr-5 float-right bg-success p-2 mb-5 rounded" href="{{ route('create-blog') }}">Create Blog</a>
+            <a class="mt-3 mr-5 float-right bg-success p-2 mb-5 rounded" href="{{ route('user.blog.create') }}" style="color:white;">Create Blog</a>
         @endif
     </div>
 @endsection

@@ -102,7 +102,7 @@ class BlogController extends Controller
         $blogService->update($blog,  $request->title, $request->body);
 
 
-        return back();
+        return redirect()->route('blogs');
     }
 
     public function delete($blog)

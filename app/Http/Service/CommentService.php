@@ -61,4 +61,24 @@ class CommentService
         return Comment::all();
     }
 
+    public function update($id, $body)
+    {
+        $comment = Comment::findOrFail($id);
+
+        $comment->update([
+            'body' => $body
+        ]);
+    }
+
+    public function changeBlogTitle($id, $title)
+    {
+        $comments = Comment::where('blog_id', $id)->get();
+
+        foreach ($comments as $comment) {
+            $comment->update([
+                'title'=>$title
+            ]);
+        }
+    }
+
 }

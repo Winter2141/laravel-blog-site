@@ -17,7 +17,7 @@ class CommentController extends Controller
 
         $commentService->commentStore($blog_id, auth()->id());
 
-        return redirect()->route('show-blog', ['blog' => $blog_id]);
+        return redirect()->route('user.blog.show', ['blog' => $blog_id]);
     }
 
     public function delete($comment_id)

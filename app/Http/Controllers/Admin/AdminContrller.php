@@ -74,7 +74,7 @@ class AdminContrller extends Controller
         ]);
     }
 
-    public function comment()
+    public function comment($id)
     {
         $adminService = new adminService();
         $blogService = new blogService();
@@ -83,10 +83,15 @@ class AdminContrller extends Controller
     
         $adminService->abortAdmin(auth()->id());
 
-        $comments = $commentService->getAll();
+        $current_blog = $blogService->getById($id);
+
+        
+
+        $comments = $commentService->getByBlogId($id);
 
         return view('/admin/blog/comment', [
-            'comments' => $comments
+            'comments' => $comments,
+            'blog_title' => $current_blog->title
         ]);
     }
 
@@ -125,6 +130,38 @@ class AdminContrller extends Controller
 
         return back();
     }
+
+
+    public function userUpdate(Request $request)
+    {
+        $userService = new userService();
+
+        $userService->update($request->edit_id, $request->user_name, $request->user_email, $request->user_type);
+
+        return back();
+    }
+
+    public function blogUpdate(Request $request)
+    {
+        $blogService = new blogService();
+        $commentService = new commentService();
+
+        $blogService->update($request->edit_id, $request->title, $request->body);
+        $commentService->changeBlogTitle($request->edit_id, $request->title);
+
+        return back();
+    }
+
+    public function commentUpdate(Request $request)
+    {
+        $commentService = new commentService();
+
+        $commentService->update($request->edit_id, $request->body);
+
+        return back();
+    }
+
+    
 
 
 }

@@ -8,16 +8,18 @@
 @section('isadmin')
     @if ($user_type == 'admin')
         <a class="dropdown-item" href=" {{ route('admin') }}">
-        Admin Panle
+        Admin Panel
         </a>
     @endif
 @endsection
 
 
 @section('content')
+    <div class="container">
+        <a href=" {{ route('blogs')}} " class="bt btn-secondary p-2 rounded">BACK</a>
     <h1 class="text-center m-5 font-weight-bold">Create Blogs</h1>
 
-    <form method="POST" action="{{ route('store-blog') }}" class="m-lg-5">
+    <form method="POST" action="{{ route('user.blog.store') }}" class="m-lg-5">
         @csrf
         <label for="title" class="d-block">Title</label>
         <input type="text" name="title" id="title" class="border block @error('title') border-danger @enderror" style="width:100%;" value="{{ old('title') ? old('title') : ''}}">
@@ -33,4 +35,5 @@
         <button class="d-block btn-primary mt-3 p-2 float-right rounded" type="submit">Save</button>
     </form>
 
+</div>
 @endsection

@@ -8,13 +8,16 @@
 @section('isadmin')
     @if ($user_type == 'admin')
         <a class="dropdown-item" href=" {{ route('admin') }}">
-        Admin Panle
+        Admin Panel
         </a>
     @endif
 @endsection
 
 
 @section('content')
+    <div class="container">
+        <a href=" {{ route('blogs')}} " class="bt btn-secondary p-2 rounded">BACK</a>
+    </div>
     <h1 class="text-center m-5 font-weight-bold">Show {{$blog->title}}</h1>
     
     <div class="p-5 m-5">
@@ -31,10 +34,10 @@
                 </div>
             </div>
             
-            <h6 style="line-height:inherit">{{$blog->body}}</h6>
+            <h6 style="line-height:inherit"><?php echo nl2br($blog->body, false)?></h6>
 
             @if ($blog->user_id == auth()->id() || $user_type == 'admin')
-                <a class="mt-3 mr-5 float-right p-2 rounded btn btn-success" href="{{ route('edit-blog', ['blog'=>$blog->id]) }}">Edit</a>
+                <a class="mt-3 mr-5 float-right p-2 rounded btn btn-success" href="{{ route('user.blog.edit', ['blog'=>$blog->id]) }}">Edit</a>
                 
                 <button data-toggle="modal" data-target="#delete_modal_blog" class="mt-3 mr-2 float-right btn btn-danger p-2 rounded">Delete</button>
                 
@@ -50,7 +53,7 @@
                           <div class="modal-body">Do you want to delete this blog?</div>
                           <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <form method="POST" action=" {{ route('delete-blog', ['blog'=>$blog->id]) }} ">
+                            <form method="POST" action=" {{ route('user.blog.delete', ['blog'=>$blog->id]) }} ">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-primary" type="submit">Delete</button>
@@ -61,6 +64,9 @@
                 </div>
             @endif
             <div class="container pt-5">
+                @php
+                    $already = false;
+                @endphp
                 <h1 class="d-block border-bottom">COMMENTS</h1>
                 @foreach ($comments as $comment)
                 <div class="card mt-3">
@@ -68,7 +74,13 @@
                         <span class="float-left">{{$comment->auth_name}}</span>
                         <span class="float-right  ml-4">{{$comment->created_at}}</span>
                     </div>
+                    
 
+                    @if ($comment->auth_id == auth()->id())
+                        @php
+                            $already = true;
+                        @endphp
+                    @endif
                     <div class="container">
                         <div class="p-4 m-3 border">
                             <h6 class="d-block" style="height:auto;">{{$comment->body}}</h6>
@@ -79,7 +91,19 @@
                     </div>
                 </div>
                 @endforeach
-
+                
+                @if (auth()->id() != $blog->user_id && $already == false)
+                    <form method="POST" action="{{ route('user.comment.store', ['blog_id'=>$blog->id]) }}">
+                        @csrf
+                        <input type="hidden" name="title" id="title" value="{{ $blog->title }}">
+                        <label class="d-block" for="body">Message</label>
+                        <textarea id="body" name="body" cols="30" rows="10" style="width:100%;" class="@error('body') border-danger @enderror">{{ old('body') ? old('body') : ''}}</textarea>
+                        @error('body')
+                            <small class="bg-warning">{{$message}}</small>
+                        @enderror
+                        <button class="d-block btn-primary mt-3 p-2 float-right rounded" type="submit">Send a comment</button>
+                    </form>
+                @endif
                 <div class="modal fade modal-danger" id="delete_modal">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -91,7 +115,7 @@
                           </div>
                           <div class="modal-body">Do you want to delete selected comment?</div>
                           <div class="modal-footer">
-                            <form action="{{ route('delete-comment-admin', ['comment'=>3]) }}" method="POST">
+                            <form action="{{ route('admin.comment.delete', ['comment'=>3]) }}" method="POST">
                                 @method('delete')
                                 @csrf
                                 <input type="hidden" name="select_id" id="select_id"  value="">
@@ -103,16 +127,6 @@
                     </div>
                 </div>
 
-                <form method="POST" action="{{ route('store-comment', ['blog_id'=>$blog->id]) }}">
-                    @csrf
-                    <input type="hidden" name="title" id="title" value="{{ $blog->title }}">
-                    <label class="d-block" for="body">Message</label>
-                    <textarea id="body" name="body" cols="30" rows="10" style="width:100%;" class="@error('body') border-danger @enderror">{{ old('body') ? old('body') : ''}}</textarea>
-                    @error('body')
-                        <small class="bg-warning">{{$message}}</small>
-                    @enderror
-                    <button class="d-block btn-primary mt-3 p-2 float-right rounded" type="submit">Send a comment</button>
-                </form>
             </div>
             
         </div>

@@ -30,4 +30,15 @@ class UserService
     {
         return User::where('id', $id)->first()->user_type;
     }
+    
+    public function update($id, $name, $email, $type)
+    {
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name'=>$name,
+            'email'=>$email,
+            'user_type'=>$type
+        ]);
+    }
 }

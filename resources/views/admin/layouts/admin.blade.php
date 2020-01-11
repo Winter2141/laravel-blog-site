@@ -149,32 +149,26 @@
           <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
               <ul class="nav flex-column">
-                <li class="nav-item">
+                <li class="nav-item mt-5">
                   <a class="nav-link @yield('dashboard')" href="{{ route('admin') }}">
                     <span data-feather="home"></span>
-                    Dashboard
+                    <h5>Dashboard</h5>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link @yield('user')" href="{{ route('userlist-show') }}">
+                <li class="nav-item mt-3">
+                  <a class="nav-link @yield('user')" href="{{ route('admin.user.show') }}">
                     <span data-feather="file"></span>
-                    User Management
+                    <h5>User Management</h5>
                   </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link @yield('blog')" href="{{ route('bloglist-show') }}">
+                <li class="nav-item mt-3">
+                    <a class="nav-link @yield('blog')" href="{{ route('admin.blog.show') }}">
                       <span data-feather="file"></span>
-                      Blog Management
+                      <h5>Blog Management</h5>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link @yield('comment')" href="{{ route('commentlist-show') }}">
-                      <span data-feather="file"></span>
-                      Comment Management
-                    </a>
-                </li>
 
               </ul>
             </div>
@@ -204,7 +198,31 @@
             var modal = $(this);
 
             modal.find('.modal-footer #select_id').val(id);
-        })
+        });
+        $('#user_edit_modal').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var name = button.data('name');
+            var email = button.data('email');
+            var type = button.data('type');
+            var modal = $(this);
+
+            modal.find('.modal-body #edit_id').val(id);
+            modal.find('.modal-body #user_name').val(name);
+            modal.find('.modal-body #user_email').val(email);
+            modal.find('.modal-body #user_type').val(type);
+        });
+        $('#edit_modal').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var title = button.data('title');
+            var body = button.data('body');
+            var modal = $(this);
+
+            modal.find('.modal-body #edit_id').val(id);
+            modal.find('.modal-body #title').val(title);
+            modal.find('.modal-body #body').val(body);
+        });
     </script>
 </body>
 
