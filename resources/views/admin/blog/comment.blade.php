@@ -14,6 +14,9 @@
     <h1 class="h2">{{ $blog_title }}'s Comment Table</h1>
 </div>
 
+
+@include('admin.layouts.flash')
+
 <table class="table table-hover table-striped mt-2 text-center" width="100%">
     <tr>
         <th>#</th>

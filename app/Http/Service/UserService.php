@@ -35,10 +35,15 @@ class UserService
     {
         $user = User::findOrFail($id);
 
-        $user->update([
-            'name'=>$name,
-            'email'=>$email,
-            'user_type'=>$type
-        ]);
+        if($user != null)
+        {
+            $user->update([
+                'name'=>$name,
+                'email'=>$email,
+                'user_type'=>$type
+            ]);
+
+            return 1;
+        }
     }
 }

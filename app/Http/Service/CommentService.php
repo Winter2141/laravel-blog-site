@@ -31,6 +31,9 @@ class CommentService
         
         $comment = Comment::create($values);
 
+        if ($comment != null) {
+            return 1;
+        }
         
     }
 
@@ -64,7 +67,7 @@ class CommentService
     public function update($id, $body)
     {
         $comment = Comment::findOrFail($id);
-
+        
         $comment->update([
             'body' => $body
         ]);

@@ -10,6 +10,8 @@
         <h1 class="h2">User Table</h1>
     </div>
 
+    @include('admin.layouts.flash')
+
     <table class="table table-hover table-striped mt-2" width="100%">
         <tr>
             <th>#</th>

@@ -50,11 +50,17 @@ class BlogController extends Controller
         $userService = new userService();
         
     
-        $blogService->store(auth()->id());
+        $result = $blogService->store(auth()->id());
 
         $user_type = $userService->getType(auth()->id());
 
-        return redirect()->route('blogs');
+        if ($result != null) {
+            return redirect()->route('blogs')->with('success', 'Blog Created Successfully');
+        }
+
+        return redirect()->route('blogs')->with('error', 'Blog Created Failed');
+
+        
     }
 
     public function show($blog)
@@ -102,7 +108,7 @@ class BlogController extends Controller
         $blogService->update($blog,  $request->title, $request->body);
 
 
-        return redirect()->route('blogs');
+        return redirect()->route('blogs')->with('success', 'Blog Update Successfully');
     }
 
     public function delete($blog)
@@ -113,7 +119,7 @@ class BlogController extends Controller
         $blogService->delete($blog);
         
 
-        return redirect()->route('blogs');
+        return redirect()->route('blogs')->with('success', 'Blog Deleted Successfully');
     }
 
     private function abortUser($user_type)

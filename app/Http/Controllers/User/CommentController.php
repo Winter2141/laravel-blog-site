@@ -15,9 +15,15 @@ class CommentController extends Controller
         $commentService = new commentService();
     
 
-        $commentService->commentStore($blog_id, auth()->id());
+        $result = $commentService->commentStore($blog_id, auth()->id());
 
-        return redirect()->route('user.blog.show', ['blog' => $blog_id]);
+        if ($result == 1) {
+            return redirect()->route('user.blog.show', ['blog' => $blog_id])->with('success', 'Message Send Successfully');
+        }
+        else {
+            return redirect()->route('user.blog.show', ['blog' => $blog_id])->with('error', 'Message send failed');
+        }
+
     }
 
     public function delete($comment_id)
@@ -26,6 +32,6 @@ class CommentController extends Controller
     
         $commentService->delete($comment_id);
 
-        return back();
+        return back()->with('success', 'Comment Deleted Successfully');
     }
 }

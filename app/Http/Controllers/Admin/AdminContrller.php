@@ -104,7 +104,7 @@ class AdminContrller extends Controller
     
         $userService->deleteById($request->select_id);
 
-        return back();
+        return back()->with('success', 'User Deleted Successfully');
     }
 
     public function blogDelete(Request $request)
@@ -116,7 +116,7 @@ class AdminContrller extends Controller
     
         $blogService->deleteById($request->select_id);
 
-        return back();
+        return back()->with('success', 'Blog Deleted Successfully');
     }
 
     public function commentDelete(Request $request)
@@ -128,7 +128,7 @@ class AdminContrller extends Controller
     
         $commentService->deleteById($request->select_id);
 
-        return back();
+        return back()->with('success', 'Comment Deleted Successfully');
     }
 
 
@@ -136,9 +136,15 @@ class AdminContrller extends Controller
     {
         $userService = new userService();
 
-        $userService->update($request->edit_id, $request->user_name, $request->user_email, $request->user_type);
+        $result = $userService->update($request->edit_id, $request->user_name, $request->user_email, $request->user_type);
 
-        return back();
+        if($result == 1)
+        {
+            return back()->with('success', 'User Update Successfully');
+        }
+        else {
+            return back()->with('error','User Update Failed');
+        }
     }
 
     public function blogUpdate(Request $request)
@@ -149,16 +155,16 @@ class AdminContrller extends Controller
         $blogService->update($request->edit_id, $request->title, $request->body);
         $commentService->changeBlogTitle($request->edit_id, $request->title);
 
-        return back();
+        return back()->with('success', 'Blog Update Successfully');
     }
 
     public function commentUpdate(Request $request)
     {
         $commentService = new commentService();
 
-        $commentService->update($request->edit_id, $request->body);
+        $retult = $commentService->update($request->edit_id, $request->body);
 
-        return back();
+        return back()->with('success', 'Comment Update Successfully');
     }
 
     

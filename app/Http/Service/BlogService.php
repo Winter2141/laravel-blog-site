@@ -45,6 +45,13 @@ class BlogService
         $values['auth_name'] = $data;
         
         $blog = Blog::create($values);
+
+        if($blog != null)
+        {
+            return 1;
+        }
+
+        return 0;
     }
 
 

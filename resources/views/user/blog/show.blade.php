@@ -16,7 +16,9 @@
 
 @section('content')
     <div class="container">
-        <a href=" {{ route('blogs')}} " class="bt btn-secondary p-2 rounded">BACK</a>
+        <a href=" {{ route('blogs')}} " class="bt btn-secondary p-2 rounded mb-5">BACK</a>
+        <br><br><br>
+        @include('admin.layouts.flash')
     </div>
     <h1 class="text-center m-5 font-weight-bold">Show {{$blog->title}}</h1>
     

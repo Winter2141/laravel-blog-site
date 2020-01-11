@@ -28,6 +28,8 @@
     <h1 class="text-center m-5 font-weight-bold">Blog List</h1>
     @csrf
     <div class="container">
+        
+        @include('admin.layouts.flash')
         @foreach ($blogs as $blog)
         <div class="card-1 mt-3">
             <div class="card-header">
