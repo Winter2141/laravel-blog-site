@@ -9,7 +9,7 @@ Setting up your development environment on your local machine :<br>
 `cd laravel-blog-site`<br>
 `composer install`<br>
 `npm install`<br>
-`copy .env.example .env`(windows)`cp .env.example .env`(Linux)/<br>
+`copy .env.example .env`(windows)/`cp .env.example .env`(Linux)<br>
 `php artisan key:generate`<br>
 <br>
 <br>
