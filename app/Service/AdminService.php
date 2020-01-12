@@ -11,7 +11,7 @@ class AdminService
         $user = User::findOrFail($user_id);
         $user_type = $user->user_type;
         
-        if($user_type != "admin")
+        if($user_type != User::ADMIN_TYPE)
         {
             abort(403);
         }

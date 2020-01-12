@@ -1,5 +1,8 @@
 @extends('user.layouts.main')
 
+@php
+use \App\Models\User;
+@endphp
 
 @section('title')
     Show

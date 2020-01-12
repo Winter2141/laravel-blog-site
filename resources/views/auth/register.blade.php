@@ -63,11 +63,13 @@
 
                         <div class="form-group row">
                             <label for="user_type" class="col-md-4 col-form-label text-md-right">User Type</label>
-
+                            @php
+                            use \App\Models\User;
+                            @endphp
                             <div class="col-md-6">
                                 <select name="user_type" id="user_type" style="width: 100%;height: 100%">
-                                    <option value="blog">Read and Wirte Avalible Blog</option>
-                                    <option value="comment">Read Only Blog & Wirte comment</option>
+                                    <option value="{{User::BLOG_TYPE}}">Read and Wirte Avalible Blog</option>
+                                    <option value="{{User::COMMENT_TYPE}}">Read Only Blog & Wirte comment</option>
                                 </select>
                             </div>
                         </div>

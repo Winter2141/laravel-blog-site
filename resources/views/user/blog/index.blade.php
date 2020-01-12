@@ -1,7 +1,11 @@
 @extends('user.layouts.main')
 
+@php
+use \App\Models\User;
+@endphp
+
 @section('isadmin')
-    @if ($user_type == 'admin')
+    @if ($user_type == User::ADMIN_TYPE)
         <a class="dropdown-item" href=" {{ route('admin') }}">
         Admin Panel
         </a>
@@ -35,7 +39,7 @@
             <a class="ml-4" href="{{ route('user.blog.show', ['blog'=>$blog->id]) }}">Show Detail</a>
         </div>
         @endforeach
-        @if ($user_type != 'comment')
+        @if ($user_type != User::COMMENT_TYPE)
             <a class="mt-3 mr-5 float-right bg-success p-2 mb-5 rounded" href="{{ route('user.blog.create') }}" id="create_blog">Create Blog</a>
         @endif
     </div>

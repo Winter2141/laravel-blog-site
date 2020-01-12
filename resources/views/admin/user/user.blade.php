@@ -4,6 +4,10 @@
     active
 @endsection
 
+@php
+use \App\Models\User;
+@endphp
+
 @section('content')
     @csrf
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -88,8 +92,8 @@
                     <div class="form-group">
                         <label for="user_type" class="col-form-label">UserType:</label>
                         <select id="user_type" name="user_type" class="p-2">
-                            <option value="blog">Blog</option>
-                            <option value="comment">Comment</option>
+                            <option value="{{User::BLOG_TYPE}}">Blog</option>
+                            <option value="{{User::COMMENT_TYPE}}">Comment</option>
                         </select>
                     </div>
                     <input type="hidden" name="edit_id" id="edit_id" value="">
