@@ -16,8 +16,7 @@ class UserService
     
     public function getAll()
     {
-        $users = User::all();
-        $users = Arr::except($users, 0);
+        $users = User::where('user_type', '<>', 'admin')->get();
         
         return $users;
     }
