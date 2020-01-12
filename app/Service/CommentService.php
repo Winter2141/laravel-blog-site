@@ -90,14 +90,16 @@ class CommentService
             return 0;
         }
 
-        foreach ($blogs as $blog) {
-            $comments = Comment::where('blog_id', $blog->id)->get();
-            if($comments)
-            {
-                $count +=  $comments->count();  
-            } 
-        }
-        return $count;
+        return Comment::leftJoin('blogs', function($join) {
+
+            $join->on('comments.blog_id', '=', 'blogs.id');
+
+        })
+
+        ->whereNotNull('blogs.id')
+
+        ->count();
+
     }
 
     public function getAll()
