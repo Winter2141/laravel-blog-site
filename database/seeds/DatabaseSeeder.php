@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use \App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'superadmin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
-            'user_type' => 'admin'
+            'user_type' => User::ADMIN_TYPE
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 use \App\Service\BlogService as blogService;
 use \App\Service\UserService as userService;
@@ -137,7 +138,7 @@ class BlogController extends Controller
 
     private function abortUser($user_type)
     {
-        if($user_type == 'comment')
+        if($user_type == User::COMMENT_TYPE)
         {
             abort(403);
         }

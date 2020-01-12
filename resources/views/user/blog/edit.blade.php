@@ -9,7 +9,7 @@ use \App\Models\User;
 @endsection
 
 @section('isadmin')
-    @if ($user_type == 'admin')
+    @if ($user_type == User::ADMIN_TYPE)
         <a class="dropdown-item" href=" {{ route('admin') }}">
         Admin Panel
         </a>
