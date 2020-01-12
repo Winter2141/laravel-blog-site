@@ -25,7 +25,7 @@ class AdminContrller extends Controller
 
         $user_count = $userService->getCount();
         $blogs = $blogService->getAssoc();
-        $comment_count = $commentService->getCount();
+        $comment_count = $commentService->getCount($blogs);
 
         return view('admin.dashboard.index', [
             'user_count'=>$user_count,

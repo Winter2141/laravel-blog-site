@@ -82,9 +82,22 @@ class CommentService
         return true;
     }
 
-    public function getCount()
+    public function getCount($blogs)
     {
-        return Comment::all()->count();
+        $count = 0;
+
+        if ($blogs->count() == 0) {
+            return 0;
+        }
+
+        foreach ($blogs as $blog) {
+            $comments = Comment::where('blog_id', $blog->id)->get();
+            if($comments)
+            {
+                $count +=  $comments->count();  
+            } 
+        }
+        return $count;
     }
 
     public function getAll()
