@@ -16,7 +16,7 @@ class UserService
     
     public function getAll()
     {
-        $users = User::where('user_type', '<>', 'admin')->get();
+        $users = User::where('user_type', '<>', User::ADMIN_TYPE)->get();
         
         return $users;
     }
