@@ -13,9 +13,12 @@
 
 Route::get('/', 'BlogController@index')->middleware('auth')->name('home');
 
-Route::post('/comments/{blog_id}', 'CommentController@store')->name('user.comment.store');
-
 Auth::routes();
+
+Route::prefix('comments')->middleware('auth')->group(function() {
+    Route::post('/comments/{blog_id}', 'CommentController@store')->name('user.comment.store');
+    Route::delete('/comments/{comment}', 'CommentController@commentDelete')->name('user.comment.delete');
+});
 
 Route::prefix('blogs')->middleware('auth')->group(function() {
     Route::get('/', 'BlogController@index')->name('blogs');
@@ -24,7 +27,6 @@ Route::prefix('blogs')->middleware('auth')->group(function() {
 
     Route::post('/', 'BlogController@store')->name('user.blog.store');
     
-
     Route::get('/{blog}', 'BlogController@show')->name('user.blog.show');
 
     Route::get('/{blog}/edit', 'BlogController@edit')->name('user.blog.edit');

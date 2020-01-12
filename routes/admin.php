@@ -1,26 +1,25 @@
 <?php
 
 
-Route::prefix('adminpanel')->middleware('auth')->group(function() {
+Route::middleware('auth')->group(function() {
 
     Route::get('/', 'AdminContrller@index')->name('admin');
 
-    Route::get('/user', 'AdminContrller@user')->name('admin.user.show');
+    Route::prefix('user')->group(function(){
+        Route::get('/', 'UserContrller@user')->name('admin.user.show');
+        Route::delete('/{user}', 'UserContrller@userDelete')->name('admin.user.delete');
+        Route::put('/edit/{user}', 'UserContrller@userUpdate')->name('admin.user.update');
+    });
 
-    Route::get('/blog', 'AdminContrller@blog')->name('admin.blog.show');
+    Route::prefix('blog')->group(function(){
+        Route::get('/', 'BlogController@blog')->name('admin.blog.show');
+        Route::delete('/{blog}', 'BlogController@blogDelete')->name('admin.blog.delete');
+        Route::put('/edit/{blog}', 'BlogController@blogUpdate')->name('admin.blog.update');
+    });
 
-    Route::get('/comment/{blog}', 'AdminContrller@comment')->name('admin.comment.show');
-
-    Route::delete('/{user}', 'AdminContrller@userDelete')->name('admin.user.delete');
-
-    Route::delete('/blog/{blog}', 'AdminContrller@blogDelete')->name('admin.blog.delete');
-
-    Route::delete('/comment/{comment}', 'AdminContrller@commentDelete')->name('admin.comment.delete');
-
-    Route::put('/edit/{user}', 'AdminContrller@userUpdate')->name('admin.user.update');
-
-    Route::put('/blog/edit/{blog}', 'AdminContrller@blogUpdate')->name('admin.blog.update');
-
-    Route::put('/comment/edit/{comment}', 'AdminContrller@commentUpdate')->name('admin.comment.update');
-
+    Route::prefix('comment')->group(function(){
+        Route::get('/{blog}', 'CommentController@comment')->name('admin.comment.show');
+        Route::delete('/{comment}', 'CommentController@commentDelete')->name('admin.comment.delete');
+        Route::put('/edit/{comment}', 'CommentController@commentUpdate')->name('admin.comment.update');
+    });
 });

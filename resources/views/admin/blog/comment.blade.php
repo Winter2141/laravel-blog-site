@@ -11,37 +11,40 @@
 @section('content')
 @csrf
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h1 class="h2">{{ $blog_title }}'s Comment Table</h1>
+  <a href="{{ route('admin.blog.show') }}" style="color:black;"><h1>{{ $blog_title }}'s Comment Table</h1></a>
 </div>
 
-
 @include('admin.layouts.flash')
+@if ($comments->count() == 0)
+<h2 class="text-center">{{ $blog_title }} has not comment</h2>
+@else
+  <table class="table table-hover table-striped mt-2 text-center table-dark" width="100%">
+      <tr>
+          <th>#</th>
+          <th>Blog Title</th>
+          <th>Author</th>
+          <th width="30%">Message</th>
+          <th>Create At</th>
+          <th>Update At</th>
+          <th>Action</th>
+      </tr>
+      @foreach ($comments as $comment)
+      <tr>
+          <td>{{$loop->index + 1}}</td>
+          <td>{{$comment->title}}</td>
+          <td>{{$comment->auth_name}}</td>
+          <td><?php echo nl2br($comment->body);?></td>
+          <td>{{$comment->created_at}}</td>
+          <td>{{$comment->updated_at}}</td>
+          <td>
+              <button class="btn btn-danger" data-id="{{$comment->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
+              <button class="btn btn-primary" data-id="{{$comment->id}}" data-title="{{$comment->title}}" data-body="{{$comment->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button>            
+          </td>
+      </tr>
+      @endforeach
+  </table>
+@endif
 
-<table class="table table-hover table-striped mt-2 text-center" width="100%">
-    <tr>
-        <th>#</th>
-        <th>Blog Title</th>
-        <th>Author</th>
-        <th width="30%">Message</th>
-        <th>Create At</th>
-        <th>Update At</th>
-        <th>Action</th>
-    </tr>
-    @foreach ($comments as $comment)
-    <tr>
-        <td>{{$loop->index + 1}}</td>
-        <td>{{$comment->title}}</td>
-        <td>{{$comment->auth_name}}</td>
-        <td>{{$comment->body}}</td>
-        <td>{{$comment->created_at}}</td>
-        <td>{{$comment->updated_at}}</td>
-        <td>
-            <button class="btn btn-danger" data-id="{{$comment->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
-            <button class="btn btn-primary" data-id="{{$comment->id}}" data-title="{{$comment->title}}" data-body="{{$comment->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button>            
-        </td>
-    </tr>
-    @endforeach
-</table>
 <div class="modal fade modal-danger" id="delete_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -77,10 +80,10 @@
             @csrf
             @method('PUT')
             <div class="modal-body">
-                    <input type="hidden" class="form-control" id="title" name="title" required>
+                    <input type="hidden" class="form-control" id="title" name="title">
                 <div class="form-group">
                     <label for="body" class="col-form-label">message:</label>
-                    <textarea class="form-control" style="height:200px;" id="body" name="body" required></textarea>
+                    <textarea class="form-control"  id="body" name="body" required></textarea>
                 </div>
                 <input type="hidden" name="edit_id" id="edit_id" value="">
             </div>

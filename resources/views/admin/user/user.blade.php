@@ -11,8 +11,11 @@
     </div>
 
     @include('admin.layouts.flash')
-
-    <table class="table table-hover table-striped mt-2" width="100%">
+    
+    @if ($users->count() == 0)
+    <h2 class="text-center">User table is empty</h2>
+    @else
+    <table class="table table-hover table-striped mt-2 table-dark" width="100%">
         <tr>
             <th>#</th>
             <th>Name</th>
@@ -23,9 +26,6 @@
             <th>Action</th>
         </tr>
         @foreach ($users as $user)
-        @if ($user->user_type == "admin")
-            @continue
-        @endif
         <tr>
             <td>{{$loop->index}}</td>
             <td>{{$user->name}}</td>
@@ -41,6 +41,7 @@
         
         @endforeach
     </table>
+    @endif
     <div class="modal fade modal-danger" id="delete_modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -86,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <label for="user_type" class="col-form-label">UserType:</label>
-                        <select name="user_type" id="user_type" name="user_type" style="width: 100%;height: 100%" class="p-2">
+                        <select id="user_type" name="user_type" class="p-2">
                             <option value="blog">Blog</option>
                             <option value="comment">Comment</option>
                         </select>

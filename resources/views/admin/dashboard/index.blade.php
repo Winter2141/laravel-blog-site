@@ -13,20 +13,22 @@
         <div class="row">
             <div class="rounded-circle col m-4 p-5 text-center hover-zoom-effect" style="background-color: lime">
                 <h2>Users</h2><br>
-                <h4>{{ $user_count }}</h4>
+                <h4>{{ number_format($user_count) }}</h4>
             </div>
             <div class="rounded-circle col m-4 p-5 text-center" style="background-color: mediumslateblue">
                 <h2>Blogs</h2><br>
-                <h4>{{ $blogs->count() }}</h4>
+                <h4>{{ number_format($blogs->count()) }}</h4>
             </div>
             <div class="rounded-circle col m-4 p-5 text-center" style="background-color: orange">
                 <h2>Comments</h2><br>
-                <h4>{{ $comment_count }}</h4>
+                <h4>{{ number_format($comment_count) }}</h4>
             </div>
         </div>
 
         <h1 class="mt-5 text-center">Recent Blog</h1>
-        @if ($blogs->count() != 0)
+        @if ($blogs->count() == 0)
+            <h2 class="text-center">There is no blog</h2>
+        @else
             <div class="card-1 mt-3">
                 <div class="card-header">
                     <div class="row">
@@ -39,7 +41,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h6>{{$blogs[0]->body}}</h6>
+                    <h6><?php echo nl2br($blogs[0]->body);?></h6>
                 </div>
             </div>
         @endif

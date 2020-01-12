@@ -4,7 +4,6 @@
     Blog
 @endsection
 
-
 @section('blog')
     active
 @endsection
@@ -17,33 +16,37 @@
 
 @include('admin.layouts.flash')
 
-<table class="table table-hover table-striped mt-2" width="100%">
-    <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Create At</th>
-        <th>Update At</th>
-        <th>Action</th>
-    </tr>
-    @foreach ($blogs as $blog)
-        @php
-            $url = route('admin.comment.show', ['blog'=>$blog->id]);
-        @endphp
+@if ($blogs->count() == 0)
+    <h2 class="text-center">Blog table is empty</h2>
+@else
+    <table class="table table-hover table-striped mt-2 table-dark" width="100%">
         <tr>
-                <td onclick="location.href='{{$url}}'">{{$loop->index + 1}}</td>
-                <td onclick="location.href='{{$url}}'">{{$blog->title}}</td>
-                <td onclick="location.href='{{$url}}'">{{$blog->auth_name}}</td>
-                <td onclick="location.href='{{$url}}'">{{$blog->created_at}}</td>
-                <td onclick="location.href='{{$url}}'">{{$blog->updated_at}}</td>
-            <td>
-                <button class="btn btn-danger" data-id="{{$blog->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
-                <button class="btn btn-primary" data-id="{{$blog->id}}" data-title="{{$blog->title}}" data-body="{{$blog->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button>
-                
-            </td>
+            <th>#</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Create At</th>
+            <th>Update At</th>
+            <th>Action</th>
         </tr>
-    @endforeach
-</table>
+        @foreach ($blogs as $blog)
+            @php
+                $url = route('admin.comment.show', ['blog'=>$blog->id]);
+            @endphp
+            <tr>
+                    <td onclick="location.href='{{$url}}'">{{$loop->index + 1}}</td>
+                    <td onclick="location.href='{{$url}}'">{{$blog->title}}</td>
+                    <td onclick="location.href='{{$url}}'">{{$blog->auth_name}}</td>
+                    <td onclick="location.href='{{$url}}'">{{$blog->created_at}}</td>
+                    <td onclick="location.href='{{$url}}'">{{$blog->updated_at}}</td>
+                <td>
+                    <button class="btn btn-danger" data-id="{{$blog->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
+                    <button class="btn btn-primary" data-id="{{$blog->id}}" data-title="{{$blog->title}}" data-body="{{$blog->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button>
+                    
+                </td>
+            </tr>
+        @endforeach
+    </table>
+@endif
 <div class="modal fade modal-danger" id="delete_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -85,7 +88,7 @@
                 </div>
                 <div class="form-group">
                     <label for="body" class="col-form-label">Description:</label>
-                    <textarea class="form-control" style="height:200px;" id="body" name="body" required></textarea>
+                    <textarea class="form-control" id="body" name="body" required></textarea>
                 </div>
                 <input type="hidden" name="edit_id" id="edit_id" value="">
             </div>

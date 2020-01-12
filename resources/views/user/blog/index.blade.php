@@ -1,14 +1,5 @@
 @extends('user.layouts.main')
 
-@section('style')
-    .vertical {
-        display:flex;
-        flex-wrap:wrap;
-        width:100%;
-    }
-@endsection
-
-
 @section('isadmin')
     @if ($user_type == 'admin')
         <a class="dropdown-item" href=" {{ route('admin') }}">
@@ -17,18 +8,14 @@
     @endif
 @endsection
 
-
-
 @section('title')
     Blog
 @endsection
-
 
 @section('content')
     <h1 class="text-center m-5 font-weight-bold">Blog List</h1>
     @csrf
     <div class="container">
-        
         @include('admin.layouts.flash')
         @foreach ($blogs as $blog)
         <div class="card-1 mt-3">
@@ -38,21 +25,18 @@
                         <h2>{{$blog->title}}</h2>
                     </div>
                     <div class="col pt-3">
-                        <span class="float-right  ml-4">Created At : {{$blog->created_at}}</span><span class="float-right">Auth : {{$blog->auth_name}}</span>
+                        <span class="float-right  ml-4">Created At : {{$blog->created_at}}</span><span class="float-right">Author : {{$blog->auth_name}}</span>
                     </div>
                 </div>
             </div>
-            <div class="card-body d-block overflow-hidden" style="height:60px;">
+            <div class="card-body d-block overflow-hidden" id="blog_body">
                 <h6><?php echo nl2br($blog->body, false)?></h6>
-
-               
             </div>
             <a class="ml-4" href="{{ route('user.blog.show', ['blog'=>$blog->id]) }}">Show Detail</a>
         </div>
         @endforeach
-
         @if ($user_type != 'comment')
-            <a class="mt-3 mr-5 float-right bg-success p-2 mb-5 rounded" href="{{ route('user.blog.create') }}" style="color:white;">Create Blog</a>
+            <a class="mt-3 mr-5 float-right bg-success p-2 mb-5 rounded" href="{{ route('user.blog.create') }}" id="create_blog">Create Blog</a>
         @endif
     </div>
 @endsection

@@ -1,17 +1,11 @@
 <?php
 
-
-namespace App\Http\Service;
+namespace App\Service;
 
 use \App\Models\Blog;
 use \App\Models\User;
 
-
-
 use Illuminate\Http\Request;
-
-
-
 
 class BlogService
 {
@@ -25,13 +19,19 @@ class BlogService
         return Blog::all();
     }
     
-
     public function deleteById($id)
     {
-        $blog = Blog::findOrFail($id);
-        $blog->delete();
-    }
+        $blogs = Blog::all();
+        $blog = $blogs->find($id);
+        
+        if ($blog == null) {
+            return false;
+        }
 
+        $blog->delete();
+
+        return true;
+    }
 
     public function store($user_id)
     {
@@ -48,18 +48,24 @@ class BlogService
 
         if($blog != null)
         {
-            return 1;
+            return true;
         }
 
-        return 0;
+        return false;
     }
-
 
     public function delete($id)
     {
-        $blog = Blog::findOrFail($id);
+        $blogs = Blog::all();
+        $blog = $blogs->find($id);
+        
+        if ($blog == null) {
+            return false;
+        }
 
         $blog->delete();
+
+        return true;
     }
 
     public function getById($id)
@@ -68,14 +74,21 @@ class BlogService
         return $blog;
     }
 
-    public function update($id, $title, $body)
+    public function update($blog_info)
     {
-        $blog = Blog::findOrFail($id);
+        $blogs = Blog::all();
+        $blog = $blogs->find($blog_info['id']);
 
-        $blog->update([
-        'title' => $title,
-        'body' => $body
+        if ($blog == null) {
+            return false;
+        }
+
+        $result = $blog->update([
+            'title' => $blog_info['title'],
+            'body' => $blog_info['body']
         ]);
+
+        return true;
     }
 }
 

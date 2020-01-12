@@ -1,0 +1,23 @@
+#title {
+    width: 100%;
+}
+
+#body {
+    width: 100%;
+}
+
+#blog_body {
+    height: 60px;
+}
+
+#create_blog {
+    color: white;
+}
+
+#show_blog_body {
+    line-height: inherit;
+}
+
+#comment_body {
+    height: auto;
+}

@@ -5,31 +5,27 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use \App\Http\Service\BlogService as blogService;
-use \App\Http\Service\UserService as userService;
-use \App\Http\Service\CommentService as commentService;
+use \App\Service\BlogService as blogService;
+use \App\Service\UserService as userService;
+use \App\Service\CommentService as commentService;
 
 class BlogController extends Controller
 {
     
-
-
     public function index()
     {
         $blogService = new blogService();
         $userService = new userService();
-        $commentService = new commentService();
     
     
         $blogs = $blogService->getAssoc();
         $user_type = $userService->getType(auth()->id());
 
-        return view('/user/blog/index', [
+        return view('.user.blog.index', [
             'blogs' => $blogs,
             'user_type' => $user_type
         ]);
     }
-
 
     public function create()
     {
@@ -39,7 +35,7 @@ class BlogController extends Controller
 
         $this->abortUser($user_type);
 
-        return view('/user/blog/create', [
+        return view('.user.blog.create', [
             'user_type' => $user_type
         ]);
     }
@@ -59,8 +55,6 @@ class BlogController extends Controller
         }
 
         return redirect()->route('blogs')->with('error', 'Blog Created Failed');
-
-        
     }
 
     public function show($blog)
@@ -74,7 +68,7 @@ class BlogController extends Controller
         $comments = $commentService->getByBlogId($blogs->id);
         $user_type = $userService->getType(auth()->id());
 
-        return view('/user/blog/show', [
+        return view('.user.blog.show', [
             'blog'=>$blogs,
             'comments' => $comments,
             'user_type' => $user_type
@@ -93,31 +87,50 @@ class BlogController extends Controller
 
         $this->abortUser($user_type);
 
-        return view('user/blog/edit', [
+        return view('user.blog.edit', [
             'blog'=>$blogs,
             'user_type' => $user_type
         ]);
     }
 
-
-    public function update($blog, Request $request)
+    public function update($id, Request $request)
     {
         $blogService = new blogService();
+        $commentService = new commentService();
+        $blog = [
+            'id'=>$id,
+            'title'=>$request->title,
+            'body'=>$request->body
+        ];
+        $comment = [
+            'id'=>$id,
+            'title'=>$request->title
+        ];
 
-
-        $blogService->update($blog,  $request->title, $request->body);
-
-
+        if(!$blogService->update( $blog ))
+        {
+            return redirect()->route('blogs')->with('error', 'Blog Update Failed');
+        }
+        if(!$commentService->changeBlogTitle( $comment ))
+        {
+            return redirect()->route('blogs')->with('error', 'Comment Blog Title Update Failed');
+        }
         return redirect()->route('blogs')->with('success', 'Blog Update Successfully');
     }
 
-    public function delete($blog)
+    public function delete($id)
     {
         $blogService = new blogService();
-        
+        $commentService = new commentService();
     
-        $blogService->delete($blog);
-        
+        if(!$blogService->deleteById($id))
+        {
+            return redirect()->route('blogs')->with('error', 'Blog Deleted Failed');
+        }
+        if(!$commentService->deleteByBlogId($id))
+        {
+            return redirect()->route('blogs')->with('error', 'Selected Blogs Comment Deleted Failed');
+        }
 
         return redirect()->route('blogs')->with('success', 'Blog Deleted Successfully');
     }
