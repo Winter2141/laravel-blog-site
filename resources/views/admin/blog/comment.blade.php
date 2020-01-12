@@ -37,8 +37,8 @@
           <td>{{$comment->created_at}}</td>
           <td>{{$comment->updated_at}}</td>
           <td>
-              <button class="btn btn-danger" data-id="{{$comment->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
-              <button class="btn btn-primary" data-id="{{$comment->id}}" data-title="{{$comment->title}}" data-body="{{$comment->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button>            
+              <button class="btn btn-primary" data-id="{{$comment->id}}" data-title="{{$comment->title}}" data-body="{{$comment->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button> 
+              <button class="btn btn-danger" data-id="{{$comment->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>           
           </td>
       </tr>
       @endforeach

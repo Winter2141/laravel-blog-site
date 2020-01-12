@@ -39,8 +39,8 @@
                     <td onclick="location.href='{{$url}}'">{{$blog->created_at}}</td>
                     <td onclick="location.href='{{$url}}'">{{$blog->updated_at}}</td>
                 <td>
-                    <button class="btn btn-danger" data-id="{{$blog->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
                     <button class="btn btn-primary" data-id="{{$blog->id}}" data-title="{{$blog->title}}" data-body="{{$blog->body}}" data-toggle="modal" data-target="#edit_modal">Edit</button>
+                    <button class="btn btn-danger" data-id="{{$blog->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button>
                     
                 </td>
             </tr>

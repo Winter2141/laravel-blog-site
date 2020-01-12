@@ -34,8 +34,8 @@
             </div>
             <h6 id="show_blog_body"><?php echo nl2br($blog->body, false)?></h6>
             @if ($blog->user_id == auth()->id() || $user_type == 'admin')
-                <a class="mt-3 mr-5 float-right p-2 rounded btn btn-success" href="{{ route('user.blog.edit', ['blog'=>$blog->id]) }}">Edit</a>
-                <button data-toggle="modal" data-target="#delete_modal_blog" class="mt-3 mr-2 float-right btn btn-danger p-2 rounded">Delete</button>
+                <button data-toggle="modal" data-target="#delete_modal_blog" class=" ml-2 mt-3 mr-2 float-right btn btn-danger p-2 rounded">DEL</button>
+                <a class="mt-3 float-right p-2 rounded btn btn-success" href="{{ route('user.blog.edit', ['blog'=>$blog->id]) }}">Edit</a>
                 <div class="modal fade" id="delete_modal_blog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

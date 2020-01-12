@@ -34,8 +34,8 @@
             <td>{{$user->created_at}}</td>
             <td>{{$user->updated_at}}</td>
             <td>
-            <button class="btn btn-danger" data-id="{{$user->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button> 
-            <button class="btn btn-primary" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-type="{{$user->user_type}}" data-toggle="modal" data-target="#user_edit_modal">Edit</button>
+                <button class="btn btn-primary" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-type="{{$user->user_type}}" data-toggle="modal" data-target="#user_edit_modal">Edit</button>
+                <button class="btn btn-danger" data-id="{{$user->id}}" data-toggle="modal" data-target="#delete_modal">DEL</button> 
             </td>
         </tr>
         

@@ -36,7 +36,7 @@
                             <h2>{{$blogs[0]->title}}</h2>
                         </div>
                         <div class="col pt-3">
-                            <span class="float-right  ml-4">Created At : {{$blogs[0]->created_at}}</span><span class="float-right">Auth : {{$blogs[0]->auth_name}}</span>
+                            <span class="float-right  ml-4">Created At : {{$blogs[0]->created_at}}</span><span class="float-right">Author : {{$blogs[0]->auth_name}}</span>
                         </div>
                     </div>
                 </div>
