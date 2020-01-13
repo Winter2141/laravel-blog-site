@@ -31,6 +31,6 @@ Admin Account Information : <br>
 	                    Admin Email : admin@gmail.com<br>
 	                    Admin Password : 12345678<br>
                         <br><br>
-2020.01.13
+2020.01.13<br>
 Install package using below.
 `composer require laravelcollective/html`
