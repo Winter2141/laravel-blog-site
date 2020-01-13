@@ -32,5 +32,5 @@ Admin Account Information : <br>
 	                    Admin Password : 12345678<br>
                         <br><br>
 2020.01.13<br>
-Install package using below.
+Install package using below.<br>
 `composer require laravelcollective/html`
