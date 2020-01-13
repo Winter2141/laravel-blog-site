@@ -27,7 +27,7 @@ class BlogService
         if ($blog == null) {
             return false;
         }
-
+        $blog->comments()->delete();
         $blog->delete();
 
         return true;
