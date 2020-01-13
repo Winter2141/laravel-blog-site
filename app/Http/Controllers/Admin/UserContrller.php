@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use \App\Service\AdminService as adminService;
 use \App\Service\UserService as userService;
+use \App\Service\BlogService as blogService;
+use \App\Service\CommentService as commentService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -28,18 +30,22 @@ class UserContrller extends Controller
     public function userDelete(Request $request)
     {
         $userService = new userService();
+        $blogService = new blogService();
     
-        if($userService->deleteById($request->select_id))
+        if(!$userService->deleteById($request->select_id))
         {
-            return back()->with('success', 'User Deleted Successfully');
+            return back()->with('error', 'User Deleted Failed');
         }
 
-        return back()->with('error', 'User Deleted Failed');
+        return back()->with('success', 'User Deleted Successfully');
     }
 
     public function userUpdate(Request $request)
     {
         $userService = new userService();
+        $blogService = new blogService();
+        $commentService = new commentService();
+
         $userinfo = [
             'id'=>$request->edit_id,
             'name'=>$request->user_name,
@@ -47,14 +53,25 @@ class UserContrller extends Controller
             'type'=>$request->user_type
         ];
 
-        $result = $userService->update($userinfo);
+        $bloguser = [
+            'id'=>$request->edit_id,
+            'name'=>$request->user_name
+        ];
 
-        if($result == 1)
+        if(!$userService->update($userinfo))
         {
-            return back()->with('success', 'User Update Successfully');
-        }
-        else {
             return back()->with('error','User Update Failed');
         }
+        if(!$blogService->updateAuthName($bloguser))
+        {
+            return back()->with('error','Blog Auth Name Update Failed');
+        }
+
+        if(!$commentService->updateAuthName($bloguser))
+        {
+            return back()->with('error','Comment Auth Name Update Failed');
+        }
+
+        return back()->with('success', 'User Update Successfully');
     }
 }

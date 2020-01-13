@@ -146,4 +146,28 @@ class CommentService
 
         return true;
     }
+
+    public function updateAuthName($user_info)
+    {
+        $name = $user_info['name'];
+        $id = $user_info['id'];
+
+        if($name == null || $id == null)
+        {
+            return false;
+        }
+        $comments = Comment::where('auth_id', $id)->get();
+
+        if($comments == null)
+        {
+            return false;
+        }
+
+        foreach ($comments as $comment) {
+            $comment->update([
+                'auth_name'=>$name
+            ]);
+        }
+        return true;
+    }
 }

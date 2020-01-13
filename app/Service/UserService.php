@@ -23,13 +23,26 @@ class UserService
 
     public function deleteById($id)
     {
-
         $users = User::all();
         $user = $users->find($id);
 
         if($user == null)
         {
             return false;
+        }
+
+        if($user->user_type != User::COMMENT_TYPE)
+        {
+            $blogs = User::find($id)->blogs();
+
+            foreach ($blogs as $blog) {
+                $blog->delete();
+                $comments = Blog::find($blog->id)->comments();
+                dd($comments);
+                foreach ($comments as $comment) {
+                    $comment->delete();
+                }
+            }
         }
 
         $user->delete();

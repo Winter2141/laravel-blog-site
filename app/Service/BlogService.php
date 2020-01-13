@@ -90,6 +90,30 @@ class BlogService
 
         return true;
     }
+
+    public function updateAuthName($user_info)
+    {
+        $name = $user_info['name'];
+        $id = $user_info['id'];
+
+        if($name == null || $id == null)
+        {
+            return false;
+        }
+        $blogs = Blog::where('user_id', $id)->get();
+
+        if($blogs == null)
+        {
+            return false;
+        }
+
+        foreach ($blogs as $blog) {
+            $blog->update([
+                'auth_name'=>$name
+            ]);
+        }
+        return true;
+    }
 }
 
 
