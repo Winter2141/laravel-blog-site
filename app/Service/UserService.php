@@ -33,15 +33,10 @@ class UserService
 
         if($user->user_type != User::COMMENT_TYPE)
         {
-            $blogs = User::find($id)->blogs();
-
+            $blogs = User::find($id)->blogs;
             foreach ($blogs as $blog) {
+                $blog->comments()->delete();
                 $blog->delete();
-                $comments = Blog::find($blog->id)->comments();
-                dd($comments);
-                foreach ($comments as $comment) {
-                    $comment->delete();
-                }
             }
         }
 

@@ -128,10 +128,6 @@ class BlogController extends Controller
         {
             return redirect()->route('blogs')->with('error', 'Blog Deleted Failed');
         }
-        if(!$commentService->deleteByBlogId($id))
-        {
-            return redirect()->route('blogs')->with('error', 'Selected Blogs Comment Deleted Failed');
-        }
 
         return redirect()->route('blogs')->with('success', 'Blog Deleted Successfully');
     }
