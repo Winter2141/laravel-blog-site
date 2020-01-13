@@ -33,4 +33,4 @@ Admin Account Information : <br>
                         <br><br>
 2020.01.13<br>
 Install package using below.<br>
-`composer require laravelcollective/html`
+`composer intall`
