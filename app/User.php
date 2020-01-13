@@ -40,7 +40,7 @@ class User extends Authenticatable
     
     public function blogs()
     {
-        return $this->hasmany('App\Models\Blog', 'id', 'user_id');
+        return $this->hasMany('App\Models\Blog', 'id', 'user_id');
     }
 
 }
