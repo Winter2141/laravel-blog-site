@@ -40,7 +40,7 @@ class UserService
             }
         }
 
-        //$user->delete();
+        $user->delete();
 
         return true;
     }

@@ -1,36 +1,29 @@
 
-If your computer has not git , first install git.<br>
-You can download git.exe here : https://git-scm.com/downloads<br>
-And create mysql database. Database name is blog_db.<br>
-Setting up your development environment on your local machine :<br>
+git에서 프로젝트를 다운로드하고 composer를 설치합니다.
+
+phpmyadmin 에서 db_blog 자료기지를 새로 만듭니다.
+
+```
+git clone https://github.com/ZhuYi0101/laravel-blog-site.git
+cd laravel-blog-site
+composer install
+npm install
+copy .env.example .env(windows)/cp .env.example .env(Linux)
+php artisan key:generate
+```
+.env 파일에서 DB_DATABASE 의 항목을 db_blog 로 수정합니다.
+
+```
+php artisan migrate
+php artisan db:seed
+php artisan serve
+Homepage URL::localhost:8000
+```
 
 
-`git clone https://github.com/ZhuYi0101/laravel-blog-site.git`<br>
-`cd laravel-blog-site`<br>
-`composer install`<br>
-`npm install`<br>
-`copy .env.example .env`(windows)/`cp .env.example .env`(Linux)<br>
-`php artisan key:generate`<br>
-<br>
-<br>
-change DB_DATABASE=laravel to DB_DATABASE=blog_db in .env file<br>
-<br>
-<br>
-`php artisan migrate`<br>
-`php artisan db:seed`<br>
-`php artisan serve`<br>
-<br>
-<br>
-<br>
-Homepage URL::`localhost:8000`<br>
-<br>
-<br>
-<br>
-Admin Account Information : <br>
-	                    Admin Name : superadmin<br>
-	                    Admin Email : admin@gmail.com<br>
-	                    Admin Password : 12345678<br>
-                        <br><br>
-2020.01.13<br>
-Install package using below.<br>
-`composer intall`
+```
+Admin Account Information : 
+Admin Name : superadmin
+Admin Email : admin@gmail.com
+Admin Password : 12345678
+```
