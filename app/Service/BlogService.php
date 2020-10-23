@@ -54,20 +54,6 @@ class BlogService
         return false;
     }
 
-    public function delete($id)
-    {
-        $blogs = Blog::all();
-        $blog = $blogs->find($id);
-        
-        if ($blog == null) {
-            return false;
-        }
-
-        $blog->delete();
-
-        return true;
-    }
-
     public function getById($id)
     {
         $blog = Blog::findOrFail($id);

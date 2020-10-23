@@ -34,11 +34,6 @@ class BlogController extends Controller
         {
             return back()->with('error', 'Blog Deleted Failed');
         }
-        if(!$commentService->deleteByBlogId($request->select_id))
-        {
-            return back()->with('error', 'Selected Blogs Comment Deleted Failed');
-        }
-
         return back()->with('success', 'Blog Deleted Successfully');
     }
 
